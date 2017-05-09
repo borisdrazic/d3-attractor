@@ -1,0 +1,11 @@
+body {
+  font-family: "Helvetica Neue", Helvetica, sans-serif; }
+
+.fixedPoint {
+  cursor: pointer; }
+  .fixedPoint.moving, .fixedPoint:hover {
+    fill: goldenrod; }
+  .fixedPoint.remove {
+    fill: red; }
+
+/*# sourceMappingURL=main.css.map */
