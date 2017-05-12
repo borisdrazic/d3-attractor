@@ -12,6 +12,16 @@ body {
 	&.remove {
 		fill: red;
 	}
+}
 
-	
+.polygons {
+  	fill: none;
+  	pointer-events: all;
+}
+
+.speedPoint {
+	pointer-events: none;
+	&.hover {
+		fill: yellow !important;
+	}
 }

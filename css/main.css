@@ -8,4 +8,13 @@ body {
   .fixedPoint.remove {
     fill: red; }
 
+.polygons {
+  fill: none;
+  pointer-events: all; }
+
+.speedPoint {
+  pointer-events: none; }
+  .speedPoint.hover {
+    fill: yellow !important; }
+
 /*# sourceMappingURL=main.css.map */
