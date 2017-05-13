@@ -2,15 +2,11 @@ body {
 	font-family: "Helvetica Neue", Helvetica, sans-serif;
 }
 
-.topRect {
-	fill: #888888;
-}
-
 .fixedPoint {
 	cursor: pointer;
 
 	&.moving, &:hover {
-		fill: goldenrod;
+		fill: #888888;
 	}
 
 	&.remove {
@@ -26,6 +22,6 @@ body {
 .speedPoint {
 	pointer-events: none;
 	&.hover {
-		fill: yellow !important;
+		fill: url(#gradient2) !important;
 	}
 }

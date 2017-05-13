@@ -1,13 +1,10 @@
 body {
   font-family: "Helvetica Neue", Helvetica, sans-serif; }
 
-.topRect {
-  fill: #888888; }
-
 .fixedPoint {
   cursor: pointer; }
   .fixedPoint.moving, .fixedPoint:hover {
-    fill: goldenrod; }
+    fill: #888888; }
   .fixedPoint.remove {
     fill: red; }
 
@@ -18,6 +15,6 @@ body {
 .speedPoint {
   pointer-events: none; }
   .speedPoint.hover {
-    fill: yellow !important; }
+    fill: url(#gradient2) !important; }
 
 /*# sourceMappingURL=main.css.map */

@@ -5,18 +5,18 @@ var SpeedChart = (function() {
 		margin = { // Margins between plot area and SVG container. This area will be left empty.
 			top: 10,
 			right: 10,
-			bottom: 10,
-			left: 10
+			bottom: 50,
+			left: 20
 		},
 		padding = { // Padding between plot content and margins. This area can be filled by plot axis and labels.
-			top: 50,
-			right: 10,
-			bottom: 30,
-			left: 300
+			top: 20,
+			right: 100,
+			bottom: 0,
+			left: 0
 		},
 		colors = {
-			pointActive: "white",
-			pointInactive: "black"
+			pointActive: "#FFFFFF",
+			pointInactive: "#000000"
 		},
 		width, // width of SVG minus margins
 		height, // height of SVG minus margins
@@ -52,6 +52,50 @@ var SpeedChart = (function() {
 	}
 
 	/**
+	 * Append gradient definitions to svg.
+	 */
+	function appendGradient(svg) {
+		var gradientBkg,
+			gradientPoint;
+
+		if (svg.select("defs").empty()) {
+			svg.append("defs");
+		}
+		
+		gradientBkg = svg.select("defs")
+			.append("linearGradient")
+				.attr("id", "gradient1")
+				.attr("x1", "0")
+				.attr("x2", "0")
+				.attr("y1", "0")
+				.attr("y2", "1")
+			    .attr("spreadMethod", "pad");
+
+		gradientBkg.append("stop")
+		    .attr("offset", "0%")
+		    .attr("stop-color", "#FFFFFF");
+
+		gradientBkg.append("stop")
+		    .attr("offset", "100%")
+		    .attr("stop-color", "#000000");
+
+		gradientPoint = svg.select("defs")
+			.append("radialGradient")
+				.attr("id", "gradient2")
+				.attr("cx", "50%")
+				.attr("cy", "50%")
+				.attr("r", "100%");
+
+		gradientPoint.append("stop")
+		    .attr("offset", "0%")
+		    .attr("stop-color", "#FFFFFF");
+
+		gradientPoint.append("stop")
+		    .attr("offset", "100%")
+		    .attr("stop-color", "#000000");
+	}
+
+	/**
 	 * Create SpeedChart.
 	 * @param{d3-element} rect - SVG rect on which SpeedChart will be placed.
 	 * @param{Integer} noPoints - number of points in the chart.
@@ -59,6 +103,9 @@ var SpeedChart = (function() {
 	function create(rect, noPoints) {
 		var i, j,
 			voronoi;
+
+		appendGradient(d3.select(rect.node().parentNode));
+		rect.attr("fill", "url(#gradient1)");
 
 		// compute width/height with margins/padding
 		width = rect.attr("width") - margin.left - margin.right;	
@@ -111,6 +158,17 @@ var SpeedChart = (function() {
       		.attr("class", "axis axis-x")
       		.attr("transform", "translate(" + padding.left + ", " + padding.top + ")")
       		.call(d3.axisTop(xScale));
+
+      	// add text to the right
+		plotG.append("text")
+    		.attr("x", noColumns * pointR * 3 + 2 * pointR)
+    		.attr("y", padding.top)
+    		.attr("dy", ".35em")
+    		.style("font-size", plotHeight * 1.7 + "px")
+    		.style("alignment-baseline", "middle")
+    		.text("/s");
+
+    	
       	
       	// Add Voronoi triangulation polygons on top of points.
       	// Set underlying point class to hover when mouse is over polygon and remove class when mouse is not over polygon.

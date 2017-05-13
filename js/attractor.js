@@ -12,10 +12,17 @@ var Attractor = (function() {
 			left: 10
 		},
 		addRemoveArea = {
-			width : 40,
-			height : 40
+			width : 70,
+			height : 70
 		},
-		fixedPointRadius = 5,
+		colors = {
+			addPoint : "#FFFFFF",
+			fixedPoint : "#FFFFFF",
+			point : "#999999"
+		},
+		addPointR = 7,
+		pointR = 3,
+		fixedPointR = 7,
 		width = plotWidth - margin.left - margin.right,
 		height = plotHeight - margin.top - margin.bottom,
 		fixedPointId = 0,
@@ -23,7 +30,7 @@ var Attractor = (function() {
 			{ id : fixedPointId++, x : width * 0.2, y : height * 0.8},
 			{ id : fixedPointId++, x : width * 0.8, y : height * 0.8},
 			{ id : fixedPointId++, x : width * 0.5, y : height * 0.2},
-			{ id : fixedPointId++, x : addRemoveArea.width / 2, y : height - addRemoveArea.height / 2}
+			createNewFixedPoint(fixedPointId++)
 		],
 		data = [],
 		spareFixedPoint = {
@@ -31,6 +38,14 @@ var Attractor = (function() {
 			y : margin.top / 2
 		},
 		plotG;
+
+	function createNewFixedPoint(id) {
+		return { 
+			id : id, 
+			x : addRemoveArea.width * 0.3, 
+			y : height - addRemoveArea.height * 0.3 
+		};
+	}
 
 	function isInRemoveArea(x, y) {
 		return x > width - addRemoveArea.width && y > height - addRemoveArea.height;
@@ -58,13 +73,13 @@ var Attractor = (function() {
 				.classed("remove", false);
 		}
 		d3.select(this)
-			.attr("cx", d.x = Math.max(fixedPointRadius, Math.min(width - fixedPointRadius, d3.event.x)))
-			.attr("cy", d.y = Math.max(fixedPointRadius, Math.min(height - fixedPointRadius, d3.event.y)));
+			.attr("cx", d.x = Math.max(fixedPointR, Math.min(width - fixedPointR, d3.event.x)))
+			.attr("cy", d.y = Math.max(fixedPointR, Math.min(height - fixedPointR, d3.event.y)));
 	}
 
 	function dragended(d, i) {
 		if (d.id === fixedPointId - 1 && !isInAddArea(d3.event.x, d3.event.y)) {
-			fixedPoints.push({ id : fixedPointId++, x : addRemoveArea.width / 2, y : height - addRemoveArea.height / 2});
+			fixedPoints.push(createNewFixedPoint(fixedPointId++));
 			update(data);
 		}
 		
@@ -83,11 +98,53 @@ var Attractor = (function() {
 		}
 	}
 
-	
+	/**
+	 * Append gradient definitions to svg.
+	 */
+	function appendGradient(svg) {
+		var gradientLeft,
+			gradientRight;
+
+		if (svg.select("defs").empty()) {
+			svg.append("defs");
+		}
+
+		gradientLeft = svg.select("defs")
+			.append("radialGradient")
+				.attr("id", "gradientLeft")
+				.attr("cx", "0%")
+				.attr("cy", "100%")
+				.attr("r", "100%");
+
+		gradientLeft.append("stop")
+		    .attr("offset", "0%")
+		    .attr("stop-color", "#00FF00");
+
+		gradientLeft.append("stop")
+		    .attr("offset", "100%")
+		    .attr("stop-color", "#000000");
+
+		gradientRight = svg.select("defs")
+			.append("radialGradient")
+				.attr("id", "gradientRight")
+				.attr("cx", "100%")
+				.attr("cy", "100%")
+				.attr("r", "100%");
+
+		gradientRight.append("stop")
+		    .attr("offset", "0%")
+		    .attr("stop-color", "#FF0000");
+
+		gradientRight.append("stop")
+		    .attr("offset", "100%")
+		    .attr("stop-color", "#000000");
+	}
 
 	function create(selector) {
 		var removeAreaG,
 			topRect;
+
+
 
 		// add plot area background
 		d3.select(selector)
@@ -115,6 +172,8 @@ var Attractor = (function() {
 					}
 				});
 
+		appendGradient(d3.select(selector).select("svg"));
+
 		// add top area above plot area
 		topRect = d3.select(selector)
 			.select("svg")
@@ -136,44 +195,17 @@ var Attractor = (function() {
 			.attr("x", 0)
 			.attr("y", height - addRemoveArea.height)
 			.attr("width", addRemoveArea.width)
-			.attr("height", addRemoveArea.height);
-		plotG.append("path")
-			.attr("stroke", "green")
-			.attr("d", "M0 " + (height - addRemoveArea.height) 
-				+ " L" + addRemoveArea.width + " " + (height - addRemoveArea.height)
-				+ " L" + addRemoveArea.width + " " + height);
-				
-
+			.attr("height", addRemoveArea.height)
+			.attr("fill", "url(#gradientLeft)");
+		
 		// add remove area
 		plotG.append("rect")
 			.attr("x", width - addRemoveArea.width)
 			.attr("y", height - addRemoveArea.height)
 			.attr("width", addRemoveArea.width)
 			.attr("height", addRemoveArea.height)
-			.classed("removeArea", true);
-		plotG.append("path")
-			.attr("stroke", "red")
-			.attr("d", "M" + width + " " + (height - addRemoveArea.height) 
-				+ " L" + (width - addRemoveArea.width) + " " + (height - addRemoveArea.height)
-				+ " L" + (width - addRemoveArea.width) + " " + height);
-		removeAreaG = plotG.append("g")
-			.attr("transform", "translate(" + (width - addRemoveArea.width) + "," + (height - addRemoveArea.height) + ")");
-		removeAreaG.append("line")
-				.attr("fill", "red")
-				.attr("stroke", "red")
-				.attr("stroke-width", 5)
-				.attr("x1", addRemoveArea.width * 0.3)
-				.attr("x2", addRemoveArea.width * 0.7)
-				.attr("y1", addRemoveArea.height * 0.3)
-				.attr("y2", addRemoveArea.height * 0.7);
-		removeAreaG.append("line")
-				.attr("fill", "red")
-				.attr("stroke", "red")
-				.attr("stroke-width", 5)
-				.attr("x1", addRemoveArea.width * 0.7)
-				.attr("x2", addRemoveArea.width * 0.3)
-				.attr("y1", addRemoveArea.height * 0.3)
-				.attr("y2", addRemoveArea.height * 0.7);
+			.classed("removeArea", true)
+			.attr("fill", "url(#gradientRight)");
 
 		update([]);
 		return topRect;
@@ -204,10 +236,10 @@ var Attractor = (function() {
 			});
 		fixedPoint
 			.attr("fill", function(d, i) {
-				return d.id === fixedPointId - 1 ? "green" : "yellow";
+				return d.id === fixedPointId - 1 ? colors.addPoint : colors.fixedPoint;
 			})
 			.attr("r", function(d, i) {
-				return d.id === fixedPointId - 1 ? Math.min(addRemoveArea.width, addRemoveArea.height) / 4 : fixedPointRadius;
+				return d.id === fixedPointId - 1 ? addPointR : fixedPointR;
 			});
 
 		// ENTER new elements present in new data
@@ -220,8 +252,8 @@ var Attractor = (function() {
 			.attr("cy", function(d) { 
 				return d.y; 
 			})
-			.attr("r", 2)
-			.attr("fill", "white");
+			.attr("r", pointR)
+			.attr("fill", colors.point);
 		fixedPoint.enter()
 			.append("circle")
 			.classed("fixedPoint", true)
@@ -232,10 +264,10 @@ var Attractor = (function() {
 				return d.y; 
 			})
 			.attr("r", function(d, i) {
-				return d.id === fixedPointId - 1 ? Math.min(addRemoveArea.width, addRemoveArea.height) / 4 : fixedPointRadius;
+				return d.id === fixedPointId - 1 ? addPointR : fixedPointR;
 			})
 			.attr("fill", function(d, i) {
-				return d.id === fixedPointId - 1 ? "green" : "yellow";
+				return d.id === fixedPointId - 1 ? colors.addPoint : colors.fixedPoint;
 			})
 			.call(d3.drag()
 				.container(document.querySelector("svg"))
