@@ -122,8 +122,7 @@ var Attractor = (function() {
 				.classed("topRect", true)
 				.attr("x", margin.left)
 				.attr("width", width)
-				.attr("height", margin.top)
-				.attr("fill", "#999");
+				.attr("height", margin.top);
 
 		// add plot area g
 		plotG = d3.select(selector)
