@@ -100,7 +100,7 @@ var SpeedChart = (function() {
 	 * @param{d3-element} rect - SVG rect on which SpeedChart will be placed.
 	 * @param{Integer} noPoints - number of points in the chart.
 	 */
-	function create(rect, noPoints) {
+	function create(rect, setSpeedFunction, noPoints) {
 		var i, j,
 			voronoi;
 
@@ -189,7 +189,9 @@ var SpeedChart = (function() {
 	    				.classed("hover", false);
 				})
 				.on("click", function(d, i) {
-					update(getPointNumber(d.data));
+					var pointNumer = getPointNumber(d.data);
+					update(pointNumer);
+					setSpeedFunction(pointNumer);
 				});
 
 		// Select first point and update points.
