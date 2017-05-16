@@ -2,26 +2,57 @@ body {
 	font-family: "Helvetica Neue", Helvetica, sans-serif;
 }
 
-.fixedPoint {
-	cursor: pointer;
+#plotArea {
+	width: 900px;
+	height: 700px;
+	position: absolute;
 
-	&.moving, &:hover {
-		fill: #888888;
+	&.overlay {
+		opacity: 0.8;
+	}
+	.fixedPoint {
+		cursor: pointer;
+
+		&.moving, &:hover {
+			fill: #888888;
+		}
+
+		&.remove {
+			fill: red;
+		}
 	}
 
-	&.remove {
-		fill: red;
+	.polygons {
+	  	fill: none;
+	  	pointer-events: all;
 	}
+
+	.speedPoint {
+		pointer-events: none;
+		&.hover {
+			fill: url(#gradient2) !important;
+		}
+	}	
 }
 
-.polygons {
-  	fill: none;
-  	pointer-events: all;
-}
 
-.speedPoint {
-	pointer-events: none;
-	&.hover {
-		fill: url(#gradient2) !important;
+
+#plotOverlay {
+	width: 900px;
+	height: 700px;
+	position: absolute;
+
+	text {
+		stroke: none;
+		fill: #03a6b5;
+
+		&.legal {
+			font-size: 8pt;
+			fill: #000000;
+
+			& a {
+				text-decoration: underline;
+			}
+		}
 	}
 }

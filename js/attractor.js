@@ -8,10 +8,10 @@ var Attractor = (function() {
     	return Math.floor(Math.random() * (max - min + 1) + min);
 	}
 
-	var plotWidth = 700,
+	var plotWidth = 900,
 		plotHeight = 700,
 		margin = { // Margins between plot area and SVG container. This area will be left empty.
-			top: 140, // NOTE: top area will be filled with speed chart, not this attractor chart
+			top: 160, // NOTE: top area will be filled with speed chart, not this attractor chart
 			right: 0,
 			bottom: 0,
 			left: 0
