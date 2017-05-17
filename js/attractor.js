@@ -28,7 +28,7 @@ var Attractor = (function() {
 		pointR = {
 			addPoint : 7, // radius of fixed point that can be dragged to center to add it
 			fixedPoint : 7, // radius of fixed points in center area
-			point : 2 // radius of points in center area
+			point : 3 // radius of points in center area
 		},
 		width = plotWidth - margin.left - margin.right, // width of SVG minus margins
 		height = plotHeight - margin.top - margin.bottom,  // height of SVG minus margins
@@ -208,6 +208,15 @@ var Attractor = (function() {
 	}
 
 	/**
+	 * Set size of points.
+	 * @Input{Integer} size - size of point.
+	 */
+	function setPointSize(size) {
+		pointR.point = size;
+		update(data);
+	}
+
+	/**
 	 * Creates attractor chart.
 	 * Returns rectangle at the top.
 	 */
@@ -314,6 +323,16 @@ var Attractor = (function() {
 			.attr("cy", function(d) { 
 				return d.y; 
 			});
+
+		// animate size change only if new points are not coming in to fast
+		if (intervalTime < 250) {
+			point.attr("r", pointR.point);
+		} else {
+			point.transition()
+				.duration(1000)
+				.attr("r", pointR.point);
+		}
+
 		fixedPoint
 			.attr("fill", function(d, i) {
 				return d.id === fixedPointId - 1 ? colors.addPoint : colors.fixedPoint;
@@ -358,6 +377,7 @@ var Attractor = (function() {
 
 	return {
 		create : create,
-		setSpeed : setSpeed
+		setSpeed : setSpeed,
+		setPointSize : setPointSize
 	};
 })();

@@ -24,6 +24,7 @@ body {
 
 	.polygons {
 	  	fill: none;
+	  	cursor: pointer;
 	  	pointer-events: all;
 	}
 
@@ -32,7 +33,11 @@ body {
 		&.hover {
 			fill: url(#gradient2) !important;
 		}
-	}	
+	}
+
+	.pickPie .top .segment {
+		cursor: pointer;
+	}
 }
 
 

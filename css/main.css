@@ -15,11 +15,14 @@ body {
       fill: red; }
   #plotArea .polygons {
     fill: none;
+    cursor: pointer;
     pointer-events: all; }
   #plotArea .speedPoint {
     pointer-events: none; }
     #plotArea .speedPoint.hover {
       fill: url(#gradient2) !important; }
+  #plotArea .pickPie .top .segment {
+    cursor: pointer; }
 
 #plotOverlay {
   width: 900px;

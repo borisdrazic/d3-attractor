@@ -4,7 +4,7 @@ var SpeedChart = (function() {
 	var pointAnimationDelay = 20, // when animating points in chart delay between sequentila points changing state
 		margin = { // Margins between plot area and SVG container. This area will be left empty.
 			top: 10,
-			right: 10,
+			right: 200,
 			bottom: 50,
 			left: 20
 		},
@@ -102,7 +102,8 @@ var SpeedChart = (function() {
 	 */
 	function create(rect, setSpeedFunction, noPoints) {
 		var i, j,
-			voronoi;
+			voronoi,
+			sizePickerArea; // area for point size picker
 
 		appendGradient(d3.select(rect.node().parentNode));
 		rect.attr("fill", "url(#gradient1)");
@@ -194,8 +195,14 @@ var SpeedChart = (function() {
 					setSpeedFunction(pointNumer);
 				});
 
+		sizePickerArea = plotG.append("g")
+			.classed("pickPie", true)
+			.attr("transform", "translate(" + (margin.left + width + (margin.right / 2)) + ", " + (margin.top + height / 2) + ")");
+
 		// Select first point and update points.
 		update(1);
+
+		return sizePickerArea;
 	}
 
 	/**
