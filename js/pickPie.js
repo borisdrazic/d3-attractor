@@ -4,7 +4,7 @@ var PickPie = (function() {
 	var animationDuration = 1000,
 		innerRadius = 10, // inner radius of pie chart
 		outerRadius = 70, // maximum outer radius of pie chart
-		colors = ["#edf8fb", "#b2e2e2", "#66c2a4", "#2ca25f", "#006d2c"], // segment colors (left to right)
+		colors = ["#01b893", "#01a357", "#03a6b8", "#026fb8", "#0237a1"], // segment colors (left to right)
 		scale = d3.scaleLinear()
 			.domain([0, 1])
 			.range([innerRadius, outerRadius]),
@@ -96,7 +96,7 @@ var PickPie = (function() {
 			.attr("x2", outerRadius + 2)
 			.attr("y1", 0)
 			.attr("y2", 0)
-			.style("stroke", "black");
+			.style("stroke", "#5b7476");
 
 		update();
 	}

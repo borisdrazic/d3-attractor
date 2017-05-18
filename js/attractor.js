@@ -21,9 +21,9 @@ var Attractor = (function() {
 			height : 70
 		},
 		colors = {
-			addPoint : "#FFFFFF", // color of fixed point that can be dragged to center to add it
-			fixedPoint : "#FFFFFF", // color of fixed points in center area
-			point : "#999999" // color of points in center area
+			addPoint : "#32939c", // color of fixed point that can be dragged to center to add it
+			fixedPoint : "#32939c", // color of fixed points in center area
+			point : "#03A6B5" // color of points in center area
 		},
 		pointR = {
 			addPoint : 7, // radius of fixed point that can be dragged to center to add it
@@ -65,7 +65,7 @@ var Attractor = (function() {
 				.attr("r", "100%");
 		gradientLeft.append("stop")
 		    .attr("offset", "0%")
-		    .attr("stop-color", "#00FF00");
+		    .attr("stop-color", "#01b893");
 		gradientLeft.append("stop")
 		    .attr("offset", "100%")
 		    .attr("stop-color", "#000000");
@@ -78,7 +78,7 @@ var Attractor = (function() {
 				.attr("r", "100%");
 		gradientRight.append("stop")
 		    .attr("offset", "0%")
-		    .attr("stop-color", "#FF0000");
+		    .attr("stop-color", "#01b893");
 		gradientRight.append("stop")
 		    .attr("offset", "100%")
 		    .attr("stop-color", "#000000");

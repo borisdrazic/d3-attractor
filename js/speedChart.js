@@ -15,8 +15,8 @@ var SpeedChart = (function() {
 			left: 0
 		},
 		colors = {
-			pointActive: "#FFFFFF",
-			pointInactive: "#000000"
+			pointActive: "#03A6B5",
+			pointInactive: "#5b7476"
 		},
 		width, // width of SVG minus margins
 		height, // height of SVG minus margins
@@ -67,17 +67,17 @@ var SpeedChart = (function() {
 				.attr("id", "gradient1")
 				.attr("x1", "0")
 				.attr("x2", "0")
-				.attr("y1", "0")
+				.attr("y1", "0.85")
 				.attr("y2", "1")
 			    .attr("spreadMethod", "pad");
 
 		gradientBkg.append("stop")
 		    .attr("offset", "0%")
-		    .attr("stop-color", "#FFFFFF");
+		    .attr("stop-color", "#000000");
 
 		gradientBkg.append("stop")
 		    .attr("offset", "100%")
-		    .attr("stop-color", "#000000");
+		    .attr("stop-color", "#1C9CA8");
 
 		gradientPoint = svg.select("defs")
 			.append("radialGradient")
@@ -88,11 +88,11 @@ var SpeedChart = (function() {
 
 		gradientPoint.append("stop")
 		    .attr("offset", "0%")
-		    .attr("stop-color", "#FFFFFF");
+		    .attr("stop-color", "#DDDDDD");
 
 		gradientPoint.append("stop")
 		    .attr("offset", "100%")
-		    .attr("stop-color", "#000000");
+		    .attr("stop-color", "#FFFFFF");
 	}
 
 	/**
@@ -167,6 +167,7 @@ var SpeedChart = (function() {
     		.attr("dy", ".35em")
     		.style("font-size", plotHeight * 1.7 + "px")
     		.style("alignment-baseline", "middle")
+    		.style("fill", "#03a6b5")
     		.text("/s");
 
     	
@@ -197,7 +198,7 @@ var SpeedChart = (function() {
 
 		sizePickerArea = plotG.append("g")
 			.classed("pickPie", true)
-			.attr("transform", "translate(" + (margin.left + width + (margin.right / 2)) + ", " + (margin.top + height / 2) + ")");
+			.attr("transform", "translate(" + (margin.left + width + (margin.right / 2) - 50) + ", " + (margin.top + height / 2) + ")");
 
 		// Select first point and update points.
 		update(1);

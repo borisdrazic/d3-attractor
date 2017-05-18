@@ -5,14 +5,16 @@ body {
   width: 900px;
   height: 700px;
   position: absolute; }
+  #plotArea text {
+    fill: #03a6b8; }
   #plotArea.overlay {
     opacity: 0.8; }
   #plotArea .fixedPoint {
     cursor: pointer; }
     #plotArea .fixedPoint.moving, #plotArea .fixedPoint:hover {
-      fill: #888888; }
+      fill: #32939c; }
     #plotArea .fixedPoint.remove {
-      fill: red; }
+      fill: #5b7476; }
   #plotArea .polygons {
     fill: none;
     cursor: pointer;
@@ -21,6 +23,8 @@ body {
     pointer-events: none; }
     #plotArea .speedPoint.hover {
       fill: url(#gradient2) !important; }
+  #plotArea .axis path, #plotArea .axis line {
+    stroke: #03a6b8; }
   #plotArea .pickPie .top .segment {
     cursor: pointer; }
 
@@ -30,7 +34,7 @@ body {
   position: absolute; }
   #plotOverlay text {
     stroke: none;
-    fill: #03a6b5; }
+    fill: #a9b802; }
     #plotOverlay text.legal {
       font-size: 8pt;
       fill: #000000; }

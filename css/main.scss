@@ -7,6 +7,10 @@ body {
 	height: 700px;
 	position: absolute;
 
+	text {
+		fill: #03a6b8
+	}
+
 	&.overlay {
 		opacity: 0.8;
 	}
@@ -14,11 +18,11 @@ body {
 		cursor: pointer;
 
 		&.moving, &:hover {
-			fill: #888888;
+			fill: #32939c;
 		}
 
 		&.remove {
-			fill: red;
+			fill: #5b7476;
 		}
 	}
 
@@ -32,6 +36,12 @@ body {
 		pointer-events: none;
 		&.hover {
 			fill: url(#gradient2) !important;
+		}
+	}
+
+	.axis {
+		path, line {
+			stroke: #03a6b8
 		}
 	}
 
@@ -49,7 +59,7 @@ body {
 
 	text {
 		stroke: none;
-		fill: #03a6b5;
+		fill: #a9b802;
 
 		&.legal {
 			font-size: 8pt;
